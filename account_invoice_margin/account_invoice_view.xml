@@ -44,13 +44,13 @@
             <field name="margin_company_currency"
                 groups="account.group_account_user"/>
         </field>
-        <xpath expr="//field[@name='invoice_line']/tree/field[@name='price_subtotal']" position="after">
+        <!--xpath expr="//field[@name='invoice_line']/tree/field[@name='price_subtotal']" position="after">
             <field name="standard_price_invoice_currency" groups="base.group_no_one"/>
             <field name="standard_price_company_currency" groups="base.group_no_one"/>
             <field name="margin_invoice_currency" groups="base.group_no_one"/>
             <field name="margin_company_currency" groups="base.group_no_one"/>
             <field name="margin_rate" groups="base.group_no_one"/>
-        </xpath>
+        </xpath-->
     </field>
 </record>
 
