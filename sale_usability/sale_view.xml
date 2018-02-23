@@ -27,6 +27,11 @@
         <button name="action_cancel" type="object" position="attributes">
             <attribute name="confirm">Are you sure you want to cancel this sale order?</attribute>
         </button>
+        <!-- client_order_ref is an important field, so we should put it in the top like in v8, not hidden in the second tab -->
+        <field name="client_order_ref" position="replace"/>
+        <field name="confirmation_date" position="after">
+            <field name="client_order_ref"/>
+        </field>
     </field>
 </record>
 
@@ -89,6 +94,27 @@ https://github.com/odoo/odoo/commit/c1e5ab9b1331c3cb7dc2232bf78952bdb40ad939 -->
         </group>
     </field>
 </record>
+
+<record id="view_order_line_tree" model="ir.ui.view">
+    <field name="name">usability.sale.order.line.tree</field>
+    <field name="model">sale.order.line</field>
+    <field name="inherit_id" ref="sale.view_order_line_tree"/>
+    <field name="arch" type="xml">
+        <field name="product_uom_qty" position="attributes">
+            <attribute name="sum">1</attribute>
+        </field>
+        <field name="qty_delivered" position="attributes">
+            <attribute name="sum">1</attribute>
+        </field>
+        <field name="qty_invoiced" position="attributes">
+            <attribute name="sum">1</attribute>
+        </field>
+        <field name="qty_to_invoice" position="attributes">
+            <attribute name="sum">1</attribute>
+        </field>
+    </field>
+</record>
+
 
 <record id="procurement_form_view" model="ir.ui.view">
     <field name="name">procurement_usability.procurement.order.form</field>

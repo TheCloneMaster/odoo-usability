@@ -11,31 +11,25 @@
 <record id="purchase_order_form" model="ir.ui.view">
     <field name="name">usability.purchase.order.form</field>
     <field name="model">purchase.order</field>
-    <!-- high priority because we change the string of a page
-    and other modules inherit the page using the original string -->
-    <field name="priority">1000</field>
     <field name="inherit_id" ref="purchase.purchase_order_form"/>
     <field name="arch" type="xml">
-        <!-- So far, I consider the shortcut icon are enough
-        <notebook position="inside">
-            <page string="Deliveries" states="approved,except_picking,except_invoice,done">
-                <field name="picking_ids" nolabel="1"/>
-            </page>
-            <page string="Invoices" states="approved,except_picking,except_invoice,done">
-                <field name="invoice_ids" nolabel="1" context="{'form_view_ref': 'account.invoice_supplier_form'}"/>
-            </page>
-        </notebook>
-        -->
-        <!--
-        <page string="Deliveries &amp; Invoices" position="attributes">
-            <attribute name="string">Other Information</attribute>
-        </page> -->
+        <button name="action_rfq_send" states="purchase" position="after">
+            <button name="print_order" states="purchase" string="Print Order" type="object" groups="base.group_user"/>
+        </button>
         <field name="fiscal_position_id" position="attributes">
             <attribute name="widget">selection</attribute>
         </field>
         <button name="button_cancel" type="object" position="attributes">
             <attribute name="confirm">Are you sure you want to cancel this purchase order?</attribute>
         </button>
+        <!-- the 'origin' field can be very long ; it can list a lot of MO or OP!
+        I think limiting the size of the field would not be the best option,
+        because the info it carries can be interesting. So we just move it
+        from the top of the view to the second tab -->
+        <field name="origin" position="replace"/>
+        <field name="date_approve" position="after">
+            <field name="origin"/>
+        </field>
     </field>
 </record>
 
@@ -46,6 +40,13 @@
     <field name="arch" type="xml">
         <field name="state" position="after">
             <field name="is_shipped" invisible="not context.get('show_purchase', False)"/>
+        </field>
+        <!-- the 'origin' field can be very long ; it can list a lot of MO or OP!
+        I think limiting the size of the field would not be the best option,
+        because the info it carries can be interesting. So we just remove it from
+        tree view to avoid layout issues -->
+        <field name="origin" position="attributes">
+            <attribute name="invisible">1</attribute>
         </field>
     </field>
 </record>
